@@ -62,7 +62,7 @@
        <td><input type="password" name="adminPwd"></td>
      </tr>
      <tr>
-       <td>Max steps up the ladder to challenge:</td>
+       <td>Max rungs up the ladder to challenge:</td>
        <td><input type="text" name="numOfOpponents" 
                   value="<%= numOfOpponents %>"></td>
      </tr>
