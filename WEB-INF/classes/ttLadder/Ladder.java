@@ -101,7 +101,7 @@ public class Ladder {
   synchronized public String addPlayer(String name, String pwd, 
                                        String email, int position) 
   {
-    errMsg = validatePlayerName(name);
+    String errMsg = validatePlayerName(name);
     if(errMsg.length() == 0) {
       Player p = new Player(name, pwd, email);
 
