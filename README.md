@@ -15,5 +15,9 @@ A table tennis ladder web app. Forked from [here](http://www.anuzen.net/pub/hg/h
 8. Make sure SMTP is working. One way is `apt-get install mailutils`.
 9. Go to the admin page in the ladder to set the mail server.
 
+### History
 
+#### 16 May 2014
+
+Players can now change their names.
 
