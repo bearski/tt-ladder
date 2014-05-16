@@ -42,16 +42,16 @@
     out.write(" | <a href='logout.jsp'>Log-out</a>");
 
     if(ladder.isInOpenChallenge(player)) {
-     out.write(" | <a href='update_challenge.jsp'>Update challenge</a>");
+     out.write(" | <a href='update_challenge.jsp'>Update Challenge</a>");
     } else if (player.getStatus() == 1) {
-     out.write(" | <a href='create_challenge.jsp'>Create challenge</a>");
+     out.write(" | <a href='create_challenge.jsp'>Create Challenge</a>");
     }
     out.write(" | <a href='user_handicap.jsp'>Handicaps</a>");
-    out.write(" | <a href='user_setting.jsp'>My settings</a>");
+    out.write(" | <a href='user_setting.jsp'>My Settings</a>");
 
   } else {
     out.write("<a href='login.html'>Log-in</a>");	
-    out.write(" | <a href='new_player.jsp'>Become a player</a>");
+    out.write(" | <a href='new_player.jsp'>Become a Player</a>");
   }
   out.write(" || <a href='stats.jsp'>Stats</a>");
   out.write(" | <a href='admin.jsp'>Admin</a>");
