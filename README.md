@@ -13,7 +13,6 @@ A table tennis ladder web app. Forked from [code written by Cenk Gazen and Pui A
 6. Edit `$CATALINA_BASE/webapps/ladder/WEB-INF/web.xml` to set the ladder admin password.
 7. Start tomcat with `$CATALINA_HOME/bin/startup.sh`.
 8. Make sure SMTP is working. One way is `apt-get install mailutils`.
-9. Go to the admin page in the ladder to set the mail server.
 
 ### History
 
