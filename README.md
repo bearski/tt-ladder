@@ -1,7 +1,7 @@
 tt-ladder
 =========
 
-A table tennis ladder web app. Forked from [here](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable).
+A table tennis ladder web app. Forked from [code written by Cenk Gazen and Pui Anusa](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable).
 
 ### Installation
 
@@ -19,5 +19,5 @@ A table tennis ladder web app. Forked from [here](http://www.anuzen.net/pub/hg/h
 
 #### 16 May 2014
 
-Players can now change their names.
+Initial [fork](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable). Changed "My Settings" so players can edit their names.
 
