@@ -27,6 +27,10 @@ public class Player {
     return dao.name;
   }
 
+  void setName(String name) {
+    dao.name = name;
+  }
+
   public String getPwd() {
     return dao.pwd;
   }

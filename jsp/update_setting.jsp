@@ -27,7 +27,7 @@
     throw new ttLadder.MyException();
   }
 
-  String name = request.getParameter("name");
+  String newName = request.getParameter("newName");
   String pwd = request.getParameter("pwd");
   String email = request.getParameter("email");
   int status = Integer.parseInt(request.getParameter("status"));
@@ -35,9 +35,10 @@
   StringBuffer message = new StringBuffer();
   
   Player player = 
-    ladder.updatePlayerSetting(playerName, pwd, email, status);
+    ladder.updatePlayerSetting(playerName, newName, pwd, email, status);
 
   if (player != null) {
+     session.setAttribute("pName", newName);
      response.sendRedirect("../index.jsp");
    } else {
      message.append("There is an error. Please try again.");

@@ -85,17 +85,24 @@ public class Ladder {
 
   /******* Player *******/
 
-  synchronized public String addPlayer(String name, String pwd, 
-                                       String email, int position) 
-  {
+  private boolean validatePlayerName(String name) {
     StringBuffer errMsg = new StringBuffer();
     
     if(getPlayer(name) != null) {
       errMsg.append("Cannot create a new player. The specified name, ");
-      errMsg.append(name + ", already exists. "); 
+      errMsg.append(name);
+      errMsg.append(", already exists. "); 
     } else if (!name.matches("[a-zA-Z0-9 .,?]+")) {
       errMsg.append("Name should match [a-zA-Z0-9 .,?]+");
-    } else {
+    }
+    return errMsg.toString();
+  }
+
+  synchronized public String addPlayer(String name, String pwd, 
+                                       String email, int position) 
+  {
+    errMsg = validatePlayerName(name);
+    if(errMsg.length() == 0) {
       Player p = new Player(name, pwd, email);
 
       if(position <= 0) {
@@ -107,7 +114,7 @@ public class Ladder {
       }
       saveLadderFile(ladderFile, this);
     }
-    return errMsg.toString();
+    return errMsg;
   }
 
   synchronized public String removePlayer(String name) {
@@ -166,11 +173,14 @@ public class Ladder {
     return -1;
   }
 
-  synchronized public Player updatePlayerSetting(String name, String pwd, 
+  synchronized public Player updatePlayerSetting(String playerName, String newName, String pwd, 
                                                  String email, int status) 
   {
-    Player player = getPlayer(name);
+    Player player = getPlayer(playerName);
     if (player != null) {
+        if(!playerName.equals(newName) && validatePlayerName(newName).length() == 0) {
+        player.setName(newName);
+      }
       player.setPwd(pwd);
       player.setEmail(email);
       player.setStatus(status);

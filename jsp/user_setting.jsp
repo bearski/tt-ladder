@@ -72,7 +72,7 @@
     out.write("<table border=1>");
     out.write("<tr>");
     out.write("<td>Player's name:</td>");
-    out.write("<td>" + playerName + "</td>");
+    out.write("<td><input type='text' name='newName' value='" + playerName + "'></td>");
     out.write("</tr>");
     out.write("<tr>");
     out.write("<td>Password:</td>");
