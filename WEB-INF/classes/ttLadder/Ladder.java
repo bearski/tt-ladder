@@ -85,7 +85,7 @@ public class Ladder {
 
   /******* Player *******/
 
-  private boolean validatePlayerName(String name) {
+  private String validatePlayerName(String name) {
     StringBuffer errMsg = new StringBuffer();
     
     if(getPlayer(name) != null) {
