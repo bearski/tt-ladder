@@ -49,7 +49,7 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
-  synchronized public int getSimultaneousChallengesAllowed() {
+  synchronized public boolean getSimultaneousChallengesAllowed() {
     return dao.simultaneousChallengesAllowed;
   }
 
@@ -68,11 +68,12 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
-  synchronized public void updateAppSetting(int numOfOpponent, 
-                                            int numOfDays, String host) 
+  synchronized public void updateAppSetting(int numOfOpponent, int numOfDays,
+                                            boolean simultaneous, String host) 
   {
     setMaxNumOfOpponents(numOfOpponent);
     setNumOfDaysToUpdate(numOfDays);
+    setSimultaneousChallengesAllowed(simultaneous);
     setHostName(host);
   }
 
@@ -344,7 +345,7 @@ public class Ladder {
     List<ChallengeOption> allOpponents = new ArrayList<ChallengeOption>();
 
     // check if the challenger is in open challenge or is an active player
-    if ((isInOpenChallenge(challenger)) ||
+    if ((!getSimultaneousChallengesAllowed() && isInOpenChallenge(challenger)) ||
         (challenger.getStatus() == 0)) {
       reasons.append("<li>" + challenger.getName() + 
                      " is not active or not eligible. ");
@@ -353,7 +354,7 @@ public class Ladder {
     
     int index = getPlayerIndex(challenger.getName());
     if (index <= 0) {
-      return new Object[] {allOpponents, "Challenger not in ladder."};
+      return new Object[] {allOpponents, ""};
     }
 
     int maxNumOfOpponents = getMaxNumOfOpponents();
@@ -373,7 +374,9 @@ public class Ladder {
       Player p = new Player(dao.playerList.get(i));
       if(p.getStatus() == 1) {
         numOfOpponents++;
-        if(!isInOpenChallenge(p)) {
+        if(areInOpenChallenge(challenger, p)) {
+          reasons.append("<li>" + p.getName() + " is already in a challenge with you.");
+        } else if(getSimultaneousChallengesAllowed() || !isInOpenChallenge(p)) {
           regOpponents.add(p);
         } else {
           reasons.append("<li>" + p.getName() + " is already in a challenge.");
@@ -385,12 +388,12 @@ public class Ladder {
     Collections.reverse(regOpponents);
 
     // 2.get a list of handicapOpponents above regular challengers
-    // (handiap play)
+    // (handicap play)
     int minIndex = (index-1)-maxNumOfOpponents;
     for(int i = minIndex; (i>= 0) ; i--) {
       Player p = new Player(dao.playerList.get(i));
       if(p.getStatus() == 1) { // active player
-        if(!isInOpenChallenge(p)) { // not in open challenge
+          if(getSimultaneousChallengesAllowed() || !isInOpenChallenge(p)) { // not in open challenge
           handicapOpponents.add(p);
         } 
       }
@@ -417,6 +420,22 @@ public class Ladder {
     List<Challenge> openList = getOpenChallengeList();
     Challenge c = getChallenge(player, openList);
     return c != null;
+  }
+
+  synchronized public boolean areInOpenChallenge(Player player1, Player player2) {
+    String name1 = player1.getName();
+    String name2 = player2.getName();
+    List<Challenge> openList = getOpenChallengeList();
+    for (Iterator it = openList.iterator(); it.hasNext(); ) {
+      Challenge c = (Challenge)it.next();
+      String tname1 = c.getChallenger().getName();
+      String tname2 = c.getOption().getOpponent().getName();
+      if((name1.equals(tname1) && name2.equals(tname2)) ||
+         (name1.equals(tname2) && name2.equals(tname1))) {
+          return true;
+      }
+    }
+    return false;
   }
 
   synchronized public List<ChallengeOption> 
@@ -465,7 +484,7 @@ public class Ladder {
     return null;
   }
 
-  /* this methnd is to find all challenges from a list
+  /* this method is to find all challenges from a list
      where the player can be an opponent or challenger */
   synchronized public List<Challenge> getChallenges(Player player, 
                                                     List<Challenge> list) 
@@ -515,18 +534,25 @@ public class Ladder {
     int cIdx = dao.playerList.indexOf(challenger.getDao());
     int oIdx = dao.playerList.indexOf(option.getOpponent().getDao());
 
-    List<Challenge> challengeList = getOpenChallengeList();
-    Challenge currentChallenge = getChallenge(challenger, challengeList);
-    if (currentChallenge != null) {
-      return "You are already in a challenge with " + 
-        currentChallenge.getOpponentOf(challenger).getName() + ".";
+    if (areInOpenChallenge(challenger, option.getOpponent())) {
+      return "You are already in a challenge with " +
+        option.getOpponent().getName() + ".";
     }
 
-    currentChallenge = getChallenge(option.getOpponent(), challengeList);
-    if (currentChallenge != null) {
-      return option.getOpponent().getName() + 
-        " is already in a challenge with " + 
-        currentChallenge.getOpponentOf(option.getOpponent()).getName() + ".";
+    if (!getSimultaneousChallengesAllowed()) {
+      List<Challenge> challengeList = getOpenChallengeList();
+      Challenge currentChallenge = getChallenge(challenger, challengeList);
+      if (currentChallenge != null) {
+        return "You are already in a challenge with " + 
+          currentChallenge.getOpponentOf(challenger).getName() + ".";
+      }
+
+      currentChallenge = getChallenge(option.getOpponent(), challengeList);
+      if (currentChallenge != null) {
+        return option.getOpponent().getName() + 
+          " is already in a challenge with " + 
+          currentChallenge.getOpponentOf(option.getOpponent()).getName() + ".";
+      }
     }
 
     if (challenger.getStatus() != 1 || cIdx < 0 || oIdx < 0) {

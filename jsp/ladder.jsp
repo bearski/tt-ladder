@@ -43,7 +43,8 @@
 
     if(ladder.isInOpenChallenge(player)) {
      out.write(" | <a href='update_challenge.jsp'>Update Challenge</a>");
-    } else if (player.getStatus() == 1) {
+    }
+    if (player.getStatus() == 1 && (ladder.getSimultaneousChallengesAllowed() || !ladder.isInOpenChallenge(player))) {
      out.write(" | <a href='create_challenge.jsp'>Create Challenge</a>");
     }
     out.write(" | <a href='user_handicap.jsp'>Handicaps</a>");

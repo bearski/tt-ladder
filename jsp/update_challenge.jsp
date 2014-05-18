@@ -22,6 +22,7 @@
   Player player = ladder.getPlayer(playerName);
   List<Challenge> openList = ladder.getOpenChallengeList();
   Challenge challenge = ladder.getChallenge(player, openList);
+  List<Challenge> challenges = ladder.getChallenges(player, openList);
 
   String cName="", oName="";
   String[] noteTmpl=new String[]{"", ""};
@@ -102,6 +103,15 @@ function textchanged() {
   }
 };
 
+function selectChallengeChanged(sel) {
+  var t = sel.options[sel.selectedIndex].text;
+  var cN = t.match(/^(.+) vs\. /)[1];
+  var oN = t.replace(/ \(.+ offer: .+\)$/,"").match(/ vs\. (.+)$/)[1];
+  var cE = document.getElementById("cScoreText");
+  var oE = document.getElementById("oScoreText");
+  cE.innerHTML = cN + "'s score:";
+  oE.innerHTML = oN + "'s score:";
+};
 
 </script>
 
@@ -122,30 +132,39 @@ function textchanged() {
     out.write("<form action='update_ladder.jsp'");
     out.write(" onsubmit='return validate_form(this)'");
     out.write(" method='post'>");
-    out.write("<b> Challenge: ");
-    out.write(oName + " - " + cName + "</b>");
+    out.write("<b> Challenge: </b>");
+    out.write("<select id='selectChallenge' onchange='selectChallengeChanged(this);'>");
+    int i = 0;
+    for (Challenge ch : challenges) {
+      String cN = ch.getChallenger().getName();
+      String oN = ch.getOption().getOpponent().getName();
+      out.write("<option value=" + i++ + ">" + cN + " vs. " + oN);
+
+      if (ch.getOption().getOffer() != null) {
+        out.write(" (" +  challenge.getOption().getTypeTxt() + " offer: ");
+        String rule = StringUtil.encodeHtml(challenge.getOption().getOffer().getRule());
+        out.write(rule + ")"); 
+      }
+
+      out.write("</option>");
+    }
+    out.write("</select>");
+
     if (challenge.getChallenger().equals(player)) {
       out.write(" (<a href='edit_cancel_challenge_note.jsp'>");
       out.write("Cancel challenge</a>)");
     }
- 
-    if(challenge.getOption().getOffer() != null) {
-      out.write("<br>(" +  challenge.getOption().getTypeTxt() + " offer: ");
-      String rule = 
-        StringUtil.encodeHtml(challenge.getOption().getOffer().getRule());
-      out.write(rule + ")"); 
-    }
-%>
+ %>
 <br><br>
 <table>
   <tr>		
-    <td><%= oName %>'s score:</td>
-    <td><input id='oscore' name='oScore' type='text' 
+    <td id='cScoreText'><%= cName %>'s score:</td>
+    <td><input id='cscore' name='cScore' type='text' 
            onchange='javascript:scorechanged();'></td>
   </tr>
   <tr>				
-    <td><%= cName %>'s score:</td>
-    <td><input id='cscore' name='cScore' type='text' 
+    <td id='oScoreText'><%= oName %>'s score:</td>
+    <td><input id='oscore' name='oScore' type='text' 
            onchange='javascript:scorechanged();'></td>
   </tr>
   <tr>
