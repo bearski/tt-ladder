@@ -49,6 +49,16 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
+  synchronized public int getSimultaneousChallengesAllowed() {
+    return dao.simultaneousChallengesAllowed;
+  }
+
+  synchronized public void setSimultaneousChallengesAllowed(boolean b) {
+    dao.simultaneousChallengesAllowed = b;
+    saveLadderFile(ladderFile, this);
+  }
+
+
   synchronized public String getHostName() {
     return dao.host;
   }
