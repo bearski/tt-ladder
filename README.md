@@ -16,7 +16,10 @@ A table tennis ladder web app. Forked from [code written by Cenk Gazen and Pui A
 
 ### History
 
+#### 18 May 2014
+
+Added option to allow multiple simultaneous challenges. Challengees get extra time if they already have open challenges.
+
 #### 16 May 2014
 
 Initial [fork](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable). Changed "My Settings" so players can edit their names.
-
