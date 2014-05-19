@@ -18,7 +18,7 @@ A table tennis ladder web app. Forked from [code written by Cenk Gazen and Pui A
 
 #### 18 May 2014
 
-Added option to allow multiple simultaneous challenges. Challengees get extra time if they already have open challenges.
+Added option to allow multiple simultaneous challenges. Challengees get extra time if they already have open challenges. Page titles and headers are customizable.
 
 #### 16 May 2014
 
