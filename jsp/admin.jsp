@@ -34,13 +34,14 @@
   int extraDays = ladder.getNumExtraDaysPerChallenge();
   String simultaneousChecked = (ladder.getSimultaneousChallengesAllowed() ? "checked" : "");
   String host = ladder.getHostName();
+  String pageTitle = ladder.getPageTitle();
   List<Player> players = ladder.getPlayerList();
   int numOfPlayers = players.size();
 %>
 
 <html>
   <head>
-    <title>Table Tennis Ladder: Admin</title>
+    <title><%= pageTitle %>: Admin</title>
     <meta http-equiv=Content-Type content="text/html">
     <script src="validate.js"></script>
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
@@ -49,9 +50,9 @@
   <body>
 
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Admin</div>
+  <div class='bigheader'><%= pageTitle %>: Admin</div>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
 
@@ -87,6 +88,11 @@
        <td>Host name:</td>
        <td><input type="text" name="host"
                   value="<%= host %>"></td>
+     </tr>
+     <tr>
+       <td>Page title:</td>
+       <td><input type"text" name="pageTitle"
+                  value="<%= pageTitle %>"</td>
      </tr>
    </table>
    <br>

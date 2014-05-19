@@ -10,17 +10,10 @@
   class="ttLadder.LadderHandle" scope="application"/>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-  <head>
-    <title>Table Tennis Ladder Guidelines</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  <body>
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   String cName = (String)session.getAttribute("pName"); 
   List<ChallengeOption> options = 
 	(List<ChallengeOption>)session.getAttribute("optionList");
@@ -34,7 +27,7 @@
   if( optionTxt == null || optionTxt == "") {
     session.removeAttribute("err_msg");
     String err_msg = "Cannot create a new challenge. " + 
-                     "The Opponent is not selected.";
+                     "The opponent is not selected.";
     session.setAttribute("err_msg", err_msg);
     response.sendRedirect("error.jsp");
   } 
@@ -65,10 +58,19 @@
 
 %>
 
-  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+<html>
+  <head>
+    <title><%= pageTitle %>: Create Challenge</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+  <body>
+
+  <div id="top">
+  <div class='bigheader'><%= pageTitle %>: Create Challenge</div>
+
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
 

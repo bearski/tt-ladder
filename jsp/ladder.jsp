@@ -10,9 +10,15 @@
   class="ttLadder.LadderHandle" scope="application"/>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<%
+  Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
+%>
+
 <html>
   <head>
-    <title>Table Tennis Ladder Application</title>
+    <title><%= pageTitle %></title>
     <meta http-equiv=Content-Type content="text/html">
     <script src="validate.js"></script>
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
@@ -21,9 +27,8 @@
   <body>
 
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+  <div class='bigheader'><%= pageTitle %></div>
 <%
-  Ladder ladder = ladderHandle.getLadder();
   String dFormat = "MMM d hh:mm a";
   String playerName = (String)session.getAttribute("pName");
   Player player = null;
@@ -51,12 +56,12 @@
     out.write(" | <a href='user_setting.jsp'>My Settings</a>");
 
   } else {
-    out.write("<a href='login.html'>Log-in</a>");	
+    out.write("<a href='login.jsp'>Log-in</a>");	
     out.write(" | <a href='new_player.jsp'>Become a Player</a>");
   }
   out.write(" || <a href='stats.jsp'>Stats</a>");
   out.write(" | <a href='admin.jsp'>Admin</a>");
-  out.write(" | <a href='guidelines.html'>Ladder Guidelines</a>");
+  out.write(" | <a href='guidelines.jsp'>Ladder Guidelines</a>");
 %>
   </div>
   

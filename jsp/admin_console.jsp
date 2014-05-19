@@ -12,26 +12,11 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
-<html>
-  <head>
-    <title>Table Tennis Ladder: Update challenge</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  <body>
-
-  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Admin update</div>
-
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
-  </div> 
-  <div id="page">
-
 <%
   StringBuffer message = new StringBuffer();  
 
   Ladder ladder = ladderHandle.getLadder(); 
+  String pageTitle = ladder.getPageTitle();
   String cmd = request.getParameter("cmd");
   Object state = session.getAttribute("admin_state");
   Object adminPwdAccepted = session.getAttribute("admin_pwd_accepted");
@@ -54,6 +39,22 @@
     message.append("Wrong password.");
   }
 %>
+
+<html>
+  <head>
+    <title><%= pageTitle %>: Admin Console</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
+
+  <body>
+
+  <div id="top">
+  <div class='bigheader'><%= pageTitle %>: Admin Console</div>
+
+   [ <a href="ladder.jsp">Ladder Home</a> ]
+  </div> 
+  <div id="page">
 
   <%= message %>
   <form action="admin_console.jsp" 

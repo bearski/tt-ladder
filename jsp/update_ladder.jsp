@@ -8,19 +8,10 @@
   class="ttLadder.LadderHandle" scope="application"/>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-  <head>
-    <title>Table Tennis Ladder</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  <body>
-
-
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   String playerName = (String)session.getAttribute("pName"); 
    
   if (playerName == null) {
@@ -55,10 +46,19 @@
   }
 %>
 
-  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Guidelines</div>
+<html>
+  <head>
+    <title><%= pageTitle %>: Update Challenge</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+  <body>
+
+  <div id="top">
+  <div class='bigheader'><%= pageTitle %>: Update Challenge</div>
+
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
   <%= message %>

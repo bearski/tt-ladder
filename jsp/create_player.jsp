@@ -7,17 +7,9 @@
 <jsp:useBean id="ladderHandle"
   class="ttLadder.LadderHandle" scope="application"/>
 
-<html>
-  <head>
-    <title>Table Tennis Ladder Guidelines</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  </body>
-
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   String name = request.getParameter("name");
   String pwd = request.getParameter("pwd");
   String email = request.getParameter("email");
@@ -39,10 +31,19 @@
 
 %>
 
-  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+<html>
+  <head>
+    <title><%= pageTitle %>: Create Player</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+  </body>
+
+  <div id="top">
+  <div class='bigheader'><%= pageTitle %>: Create Player</div>
+
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
 

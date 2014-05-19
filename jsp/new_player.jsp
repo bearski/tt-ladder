@@ -9,17 +9,6 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
-<html>
-  <head>
-    <title>Table Tennis Ladder Application</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  <body>
-
-
-
 <script type="text/javascript">
   function validate_form(thisform) {
     with (thisform)
@@ -39,13 +28,23 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   int size = (ladder.getPlayerList()).size();
 %>
 
-  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+<html>
+  <head>
+    <title><%= pageTitle %>: Create Player</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+  <body>
+
+  <div id="top">
+  <div class='bigheader'><%= pageTitle %>: Create Player</div>
+
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
 

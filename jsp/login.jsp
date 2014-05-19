@@ -1,55 +1,72 @@
 <%@ page import="ttLadder.Ladder" %>
-<%@ page import="ttLadder.Player" %>
-<%@ page import="ttLadder.Challenge" %>
-
-<%@ page import="java.io.*" %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <jsp:useBean id="ladderHandle"
   class="ttLadder.LadderHandle" scope="application"/>
 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<script type="text/javascript">
+  function validate_required(field, alerttxt) { 
+    with (field) 
+    {
+      if (value==null||value=="") {
+        alert(alerttxt);return false;
+      } else {
+        return true
+      }
+    }
+  } 
+
+  function validate_form(thisform) {
+    with (thisform)
+    {
+      if (validate_required(name, "Name is blank") == false) {
+        name.focus(); return false;
+      }
+      if (validate_required(pwd, "pwd is blank") == false) {
+        pwd.focus(); return false;
+      }
+    }
+  }
+</script>
+
+<% 
+  Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
+%>
+
 <html>
   <head>
-    <title>Table Tennis Ladder Guidelines</title>
+    <title><%= pageTitle %>: Log-in</title>
     <meta http-equiv=Content-Type content="text/html">
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
   </head>
 
   <body>
-
-
-
-<% 
-  Ladder ladder = ladderHandle.getLadder();
-  String name = request.getParameter("name");
-  String adminPwd = application.getInitParameter("adminpwd");
-  String pwd = request.getParameter("pwd");
-  StringBuffer message = new StringBuffer();
-
-  Player player = ladder.getPlayer(name);
-  if (player == null) {
-    message.append("Player " + name + " doesn't exist.");
-  } else if(!player.getPwd().equals(pwd) && !adminPwd.equals(pwd)) {
-    message.append(" The password is incorrect.");
-  } else {  
-    session.setAttribute("pName", name);
-    response.sendRedirect("../index.jsp");
-  }
-
-%>
-
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+  <div class='bigheader'><%= pageTitle %>: Log-in</div>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
-  </div> 
-  <div id="page">
+   [ <a href="../index.jsp">Ladder Home</a> ]
+   </div>
+   <div id="page">
+ 
+   <form action="login_response.jsp" 
+         onsubmit="return validate_form(this)" 
+         method="post">
+   <table border=1>
+     <tr>
+       <td>Player name:</td>
+       <td><input type="text" name="name"></td>
+     </tr>
+     <tr>
+       <td>Password:</td>
+       <td><input type="password" name="pwd"></td>
+     </tr>
+   </table>
+   <br>
+   <input type="submit" value="Log-in"></td>
+   </form>
 
-  Name = <%= name %><br> 
-  Pwd = <%=pwd %><br>
-  Error: <%= message %><br>
-
- </div>
- </body> 
+  </div>
+  </body>
 </html>

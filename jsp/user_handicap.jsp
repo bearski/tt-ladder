@@ -11,6 +11,7 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   StringBuffer message = new StringBuffer();
   String playerName = (String)session.getAttribute("pName");
    
@@ -18,7 +19,7 @@
 
 <html>
   <head>
-    <title>Table Tennis Ladder: Handicaps</title>
+    <title><%= pageTitle %>: Handicaps</title>
     <meta http-equiv=Content-Type content="text/html">
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
   </head>
@@ -26,9 +27,9 @@
   <body>
 
  <div id="top">
-  <div class='bigheader'>Table Tennis Ladder</div>
+  <div class='bigheader'><%= pageTitle %>: Handicaps</div>
 
-  <span class='player'>Player: <%= playerName %></span> | <a href="ladder.jsp">TT Ladder Home</a>
+  <span class='player'>Player: <%= playerName %></span> | <a href="ladder.jsp">Ladder Home</a>
   </div> 
   <div id="page">
 

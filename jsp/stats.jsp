@@ -16,11 +16,12 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
 %>
 
 <html>
   <head>
-    <title>Table Tennis Ladder: Statistics</title>
+    <title><%= pageTitle %>: Statistics</title>
     <meta http-equiv=Content-Type content="text/html">
     <script src="validate.js"></script>
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
@@ -29,9 +30,9 @@
   <body>
 
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Statistics</div>
+  <div class='bigheader'><%= pageTitle %>: Statistics</div>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div>
   <div id='page'>
 

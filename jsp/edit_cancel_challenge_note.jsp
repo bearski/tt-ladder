@@ -12,6 +12,7 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
+  String pageTitle = ladder.getPageTitle();
   String playerName = (String)session.getAttribute("pName");
 
   if (playerName == null) {
@@ -28,7 +29,7 @@
 
 <html>
   <head>
-    <title>Table Tennis Ladder: edit note</title>
+    <title><%= pageTitle %>: Cancel Challenge</title>
     <meta http-equiv=Content-Type content="text/html">
     <script src="validate.js"></script>
     <link href="../css/style.css" type="text/css" rel="stylesheet" />
@@ -37,9 +38,9 @@
   <body>
 
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Cancel challenge</div>
+  <div class='bigheader'><%= pageTitle %>: Cancel Challenge</div>
 
-  <span class='player'>Player: <%= playerName %></span> | <a href="ladder.jsp">TT Ladder Home</a>
+  <span class='player'>Player: <%= playerName %></span> | <a href="ladder.jsp">Ladder Home</a>
 
   </div> 
   <div id="page">

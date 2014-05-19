@@ -12,23 +12,23 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
-<html>
-  <head>
-    <title>Table Tennis Ladder: Update challenge</title>
-    <meta http-equiv=Content-Type content="text/html">
-    <link href="../css/style.css" type="text/css" rel="stylesheet" />
-  </head>
-
-  <body>
-
-
 <%
   Ladder ladder = ladderHandle.getLadder(); 
+  String pageTitle = ladder.getPageTitle();
   StringBuffer message = new StringBuffer();  
   String pwd = application.getInitParameter("adminpwd");
   String adminPwd = request.getParameter("adminPwd");	
   String actionType = request.getParameter("cmd");
 %>
+
+<html>
+  <head>
+    <title><%= pageTitle %>: Admin</title>
+    <meta http-equiv=Content-Type content="text/html">
+    <link href="../css/style.css" type="text/css" rel="stylesheet" />
+  </head>
+
+  <body>
 
 <% 
   if (pwd == null || pwd.length() < 6) {
@@ -45,7 +45,8 @@
         int extraDays = Integer.parseInt(extraDaysTxt);
         boolean simultaneous = request.getParameter("simultaneousChallengesAllowed") != null;
         String hostName = request.getParameter("host");
-        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, hostName);
+        String pageTitle = request.getParameter("pageTitle");
+        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, hostName, pageTitle);
         response.sendRedirect("../index.jsp");
       }
 
@@ -87,9 +88,9 @@
 %>
 
   <div id="top">
-  <div class='bigheader'>Table Tennis Ladder: Admin update</div>
+  <div class='bigheader'><%= pageTitle %>: Admin</div>
 
-   [ <a href="ladder.jsp">TT Ladder Home</a> ]
+   [ <a href="ladder.jsp">Ladder Home</a> ]
   </div> 
   <div id="page">
 

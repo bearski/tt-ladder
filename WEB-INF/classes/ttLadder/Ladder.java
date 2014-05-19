@@ -23,6 +23,7 @@ public class Ladder {
     dao.numOfDaysToUpdate = 3;
     dao.numExtraDaysPerChallenge = 1;
     dao.host = "localhost";
+    dao.pageTitle = "Table Tennis Ladder";
     dao.announcements = new ArrayList<AnnouncementV2>();
   }
 
@@ -77,14 +78,24 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
+  synchronized public String getPageTitle() {
+    return dao.pageTitle;
+  }
+
+  synchronized public void setPageTitle(String s) {
+    dao.pageTitle = s;
+    saveLadderFile(ladderFile, this);
+  }
+
   synchronized public void updateAppSetting(int numOfOpponent, int numOfDays, int extraDays,
-                                            boolean simultaneous, String host) 
+                                            boolean simultaneous, String host, String pageTitle) 
   {
     setMaxNumOfOpponents(numOfOpponent);
     setNumOfDaysToUpdate(numOfDays);
     setNumExtraDaysPerChallenge(extraDays);
     setSimultaneousChallengesAllowed(simultaneous);
     setHostName(host);
+    setPageTitle(pageTitle);
   }
 
   /******* Auto update *******/
