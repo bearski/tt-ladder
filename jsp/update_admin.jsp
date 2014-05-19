@@ -41,9 +41,11 @@
         int numOfOp = Integer.parseInt(numOfOpTxt);
         String numOfDaysTxt = request.getParameter("daysToUpdate");
         int numOfDays = Integer.parseInt(numOfDaysTxt);
+        String extraDaysTxt = request.getParameter("extraDays");
+        int extraDays = Integer.parseInt(extraDaysTxt);
         boolean simultaneous = request.getParameter("simultaneousChallengesAllowed") != null;
         String hostName = request.getParameter("host");
-        ladder.updateAppSetting(numOfOp, numOfDays, simultaneous, hostName);
+        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, hostName);
         response.sendRedirect("../index.jsp");
       }
 

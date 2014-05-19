@@ -21,13 +21,16 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
-  String cName = (String)session.getAttribute("pName"); 
+  String playerName = (String)session.getAttribute("pName"); 
    
-  if (cName == null) {
+  if (playerName == null) {
     throw new ttLadder.MyException();
   }
 
-  Player challenger = ladder.getPlayer(cName);
+  Player challenger = ladder.getPlayer(request.getParameter("cName"));
+  Player opponent   = ladder.getPlayer(request.getParameter("oName"));
+  Challenge challenge = ladder.getSpecificChallenge(challenger, opponent, ladder.getOpenChallengeList());
+
   StringBuffer message =  new StringBuffer(); 
 
   try {
@@ -40,10 +43,10 @@
 
     if (cScore < 0 || oScore < 0) {
       message.append("Scores cannot be negative.");
-    } else if(challenger == null) {
+    } else if (challenge == null) {
       message.append("There is an error. Please try again.");
     } else {
-      ladder.updateChallenge(challenger, cScore, oScore, note);
+      ladder.updateChallenge(challenge, cScore, oScore, note);
       response.sendRedirect("../index.jsp");
     }
   } catch (NumberFormatException e) {

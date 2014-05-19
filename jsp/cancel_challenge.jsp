@@ -9,18 +9,24 @@
 
 <% 
   Ladder ladder = ladderHandle.getLadder();
-  String cName = (String)session.getAttribute("pName"); 
+  String playerName = (String)session.getAttribute("pName"); 
    
-  if (cName == null) {
+  if (playerName == null) {
     throw new ttLadder.MyException();
   }
 
+  String cName = request.getParameter("cName");
+  String oName = request.getParameter("oName");
+
   Player challenger = ladder.getPlayer(cName);
+  Player opponent   = ladder.getPlayer(oName);
+  Challenge challenge = ladder.getSpecificChallenge(challenger, opponent, ladder.getOpenChallengeList());
+
   StringBuffer message =  new StringBuffer(); 
 
   String note = request.getParameter("note");
 
-  ladder.cancelChallenge(challenger, note);
+  ladder.cancelChallenge(challenge, note);
 
   response.sendRedirect("../index.jsp");
 %>

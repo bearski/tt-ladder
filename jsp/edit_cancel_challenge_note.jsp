@@ -18,9 +18,12 @@
     throw new ttLadder.MyException();
   } 
 
-  Player player = ladder.getPlayer(playerName);
-  List<Challenge> openList = ladder.getOpenChallengeList();
-  Challenge challenge = ladder.getChallenge(player, openList);
+  String cName = request.getParameter("cName");
+  String oName = request.getParameter("oName");
+
+  Player challenger = ladder.getPlayer(cName);
+  Player opponent   = ladder.getPlayer(oName);
+  Challenge challenge = ladder.getSpecificChallenge(challenger, opponent, ladder.getOpenChallengeList());
 %>
 
 <html>
@@ -46,15 +49,16 @@
 
 <% 
   if (challenge != null) {
-      out.write("<form action='cancel_challenge.jsp' " + 
-      		" method='post'>");				 
+      out.write("<form action='cancel_challenge.jsp' method='post'>");				 
       out.write("<textarea rows='3' cols='50' name='note'>" +
-      	        playerName + " had to cancel the challenge against " +
-		challenge.getOpponent().getName() + "." +
-		"</textarea><br><br>");
+      	        challenger.getName() + " had to cancel the challenge against " +
+                opponent.getName() + "." +
+		            "</textarea><br><br>");
+      out.write("<input type='hidden' name='cName' value='" + cName + "'>");
+      out.write("<input type='hidden' name='oName' value='" + oName + "'>");
       out.write("<input type='submit' value='Cancel challenge'></form>");
   } else {
-    out.write("You don't have any challenges to update.");
+    out.write("There is an error. Please try again.");
   }
 %>
 

@@ -21,16 +21,45 @@
 
   Player player = ladder.getPlayer(playerName);
   List<Challenge> openList = ladder.getOpenChallengeList();
-  Challenge challenge = ladder.getChallenge(player, openList);
   List<Challenge> challenges = ladder.getChallenges(player, openList);
 
-  String cName="", oName="";
-  String[] noteTmpl=new String[]{"", ""};
+  List<String> cancelTags = new ArrayList<String>();
+  for (Challenge ch : challenges) {
+    String cN = ch.getChallenger().getName();
+    String oN = ch.getOption().getOpponent().getName();
 
-  if (challenge != null) {
+    if (cN.equals(playerName)) {
+      cancelTags.add(" (<a href='edit_cancel_challenge_note.jsp?cName=" + cN + "&oName=" + oN + "'>Cancel challenge</a>)");
+    } else {
+      cancelTags.add("");
+    }
+  }
+
+  List<String> challengeOffers = new ArrayList<String>();
+  for (Challenge ch : challenges) {
+    if (ch.getOption().getOffer() != null) {
+      String rule = StringUtil.encodeHtml(ch.getOption().getOffer().getRule());
+      challengeOffers.add("<br>(" +  ch.getOption().getTypeTxt() + " offer: " + rule + ")");
+    } else {
+      challengeOffers.add("");
+    }
+  }
+
+  List<String> advanceNoteTmpls = new ArrayList<String>();
+  List<String> failNoteTmpls = new ArrayList<String>();
+  for (Challenge ch : challenges) {
+    String[] noteTmpl = ladder.getDefaultNotes(ch);
+    failNoteTmpls.add(noteTmpl[0]);
+    advanceNoteTmpls.add(noteTmpl[1]);
+  }
+
+  Challenge challenge = null;
+  String cName="", oName="";
+
+  if (challenges.size() > 0) {
+    challenge = challenges.get(0);
     cName = challenge.getChallenger().getName();
     oName = challenge.getOption().getOpponent().getName();
-    noteTmpl = ladder.getDefaultNotes(challenge);
   }
 %>
 
@@ -60,28 +89,39 @@ function validate_form(thisform) {
 
 var auto=true;
 var template="";
-var opponent="<%=oName%>";
-var challenger="<%=cName%>";
+var challengeIndex = 0;
+
+var advanceTemplates = [
+<%
+  for (String t : advanceNoteTmpls) {
+    out.write("\"" + t + "\", ");
+  }
+%>
+];
+
+var failTemplates = [
+<%
+  for (String t : failNoteTmpls) {
+    out.write("\"" + t + "\", ");
+  }
+%>
+];
 
 function scorechanged() {
-  var a = document.getElementById("cscore").value;
-  var b = document.getElementById("oscore").value;
+  var a = document.getElementById("cScore").value;
+  var b = document.getElementById("oScore").value;
 
   if (auto) {
     var s1=parseInt(a);
     var s2=parseInt(b);
-    var note;
+
     if (!isNaN(s1) && !isNaN(s2)) {
-      if (s1 <= s2) {
-	note = "<%=noteTmpl[0]%>";
-      } else {
-	note = "<%=noteTmpl[1]%>";
-      }
-      document.getElementById("note").value=note.replace(/#a#/g, a)
-        .replace(/#b#/g, b);
+      var note = s1 <= s2 ? failTemplates[challengeIndex] : advanceTemplates[challengeIndex];
+      document.getElementById("note").value =
+         note.replace(/#a#/g, a).replace(/#b#/g, b);
     }
   } else {
-    document.getElementById("note").value=
+    document.getElementById("note").value =
       template.replace(/#a#/g, a).replace(/#b#/g, b);
   }
 
@@ -90,11 +130,12 @@ function scorechanged() {
 function textchanged() {
   auto=false;
 
-  var a = document.getElementById("cscore").value;
-  var b = document.getElementById("oscore").value;
-  var c = document.getElementById("note").value;
+  var a = document.getElementById("cScore").value;
+  var b = document.getElementById("oScore").value;
 
-  if (c == null || /^\s*$/.test(c)) {
+  var note = document.getElementById("note").value;
+
+  if (note == null || /^\s*$/.test(note)) {
     auto=true;
     template="";
   } else {
@@ -103,69 +144,112 @@ function textchanged() {
   }
 };
 
-function selectChallengeChanged(sel) {
-  var t = sel.options[sel.selectedIndex].text;
-  var cN = t.match(/^(.+) vs\. /)[1];
-  var oN = t.replace(/ \(.+ offer: .+\)$/,"").match(/ vs\. (.+)$/)[1];
-  var cE = document.getElementById("cScoreText");
-  var oE = document.getElementById("oScoreText");
-  cE.innerHTML = cN + "'s score:";
-  oE.innerHTML = oN + "'s score:";
+var cNames = [
+<%
+  for (Challenge ch : challenges) {
+    String cN = ch.getChallenger().getName();
+    out.write("\"" + cN + "\", ");
+  }
+%>
+];
+
+var oNames = [
+<%
+  for (Challenge ch : challenges) {
+    String oN = ch.getOption().getOpponent().getName();
+    out.write("\"" + oN + "\", ");
+  }
+%>
+];
+
+var offers = [
+<%
+  for (String offer : challengeOffers) {
+    out.write("\"" + offer + "\", ");
+  }
+%>
+];
+
+var cancels = [
+<%
+  for (String cancelTag : cancelTags) {
+    out.write("\"" + cancelTag + "\", ");
+  }
+%>
+];
+
+function challengeChanged(sel) {
+  challengeIndex = sel.selectedIndex;
+
+  var cName = cNames[challengeIndex];
+  var oName = oNames[challengeIndex];
+
+  document.getElementById("cName").value = cName;
+  document.getElementById("oName").value = oName;
+
+  document.getElementById("cScoreName").innerHTML = cName;
+  document.getElementById("oScoreName").innerHTML = oName;
+
+  document.getElementById("cScore").value = "";
+  document.getElementById("oScore").value = "";
+  document.getElementById("note").value = "";
+
+  auto = true;
+  template = "";
+
+  document.getElementById("cancel").innerHTML = cancels[challengeIndex];
+  document.getElementById("offer").innerHTML = offers[challengeIndex];
 };
 
 </script>
+</head>
 
-  </head>
+<body>
 
-  <body>
-
- <div id="top">
+<div id="top">
   <div class='bigheader'>Table Tennis Ladder</div>
-
   <span class="player"> Player: <%= playerName %></span> | <a href="ladder.jsp">TT Ladder Home</a>
+</div> 
 
-  </div> 
-  <div id="page">
+<div id="page">
 
-<% 
-  if (challenge != null) {
-    out.write("<form action='update_ladder.jsp'");
-    out.write(" onsubmit='return validate_form(this)'");
-    out.write(" method='post'>");
-    out.write("<b> Challenge: </b>");
-    out.write("<select id='selectChallenge' onchange='selectChallengeChanged(this);'>");
-    int i = 0;
+<form action='update_ladder.jsp' onsubmit='return validate_form(this)' method='post'>
+<b> Challenge: </b>
+<select onchange='challengeChanged(this);'>
+  <% 
     for (Challenge ch : challenges) {
       String cN = ch.getChallenger().getName();
       String oN = ch.getOption().getOpponent().getName();
-      out.write("<option value=" + i++ + ">" + cN + " vs. " + oN);
-
-      if (ch.getOption().getOffer() != null) {
-        out.write(" (" +  challenge.getOption().getTypeTxt() + " offer: ");
-        String rule = StringUtil.encodeHtml(challenge.getOption().getOffer().getRule());
-        out.write(rule + ")"); 
-      }
-
-      out.write("</option>");
+      out.write("<option>" + cN + " - " + oN + "</option>");
     }
-    out.write("</select>");
+  %>
+</select>
 
-    if (challenge.getChallenger().equals(player)) {
-      out.write(" (<a href='edit_cancel_challenge_note.jsp'>");
-      out.write("Cancel challenge</a>)");
+<span id='cancel'>
+  <%
+    if (cancelTags.size() > 0) {
+      out.write(cancelTags.get(0));
     }
- %>
+  %>
+</span>
+
+<span id='offer'>
+  <%
+    if (challengeOffers.size() > 0) {
+      out.write(challengeOffers.get(0));
+    }
+  %>
+</span>
+
 <br><br>
 <table>
   <tr>		
-    <td id='cScoreText'><%= cName %>'s score:</td>
-    <td><input id='cscore' name='cScore' type='text' 
-           onchange='javascript:scorechanged();'></td>
+    <td><span id='cScoreName'><%= cName %></span>'s score:</td>
+    <td><input id='cScore' name='cScore' type='text' onchange='scorechanged();'></td>
   </tr>
   <tr>				
-    <td id='oScoreText'><%= oName %>'s score:</td>
-    <td><input id='oscore' name='oScore' type='text' 
-           onchange='javascript:scorechanged();'></td>
+    <td><span id='oScoreName'><%= oName %></span>'s score:</td>
+    <td><input id='oScore' name='oScore' type='text' onchange='scorechanged();'></td>
   </tr>
   <tr>
     <td colspan=2>
@@ -175,20 +259,16 @@ function selectChallengeChanged(sel) {
   <tr>
     <td colspan=2>
     <textarea id='note' rows='3' cols='50' name='note' 
-            onchange='javascript:textchanged();'></textarea>
+            onchange='textchanged();'></textarea>
     </td>
   </tr>
 </table>
 
+<input type='hidden' id='cName' name='cName' value='<%= cName %>'>
+<input type='hidden' id='oName' name='oName' value='<%= oName %>'>
+
 <br><input type='submit' value='Update challenge'>
 </form>
-
-<%
-   
-  } else {
-    out.write("You don't have any challenges to update.");
-  }
-%>
 
   </div>
   </body>

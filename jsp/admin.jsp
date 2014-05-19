@@ -31,6 +31,7 @@
   Ladder ladder = ladderHandle.getLadder();
   int numOfOpponents = ladder.getMaxNumOfOpponents();
   int daysToUpdate = ladder.getNumOfDaysToUpdate();
+  int extraDays = ladder.getNumExtraDaysPerChallenge();
   String simultaneousChecked = (ladder.getSimultaneousChallengesAllowed() ? "checked" : "");
   String host = ladder.getHostName();
   List<Player> players = ladder.getPlayerList();
@@ -71,6 +72,11 @@
        <td>Days to complete the challenge:</td>
        <td><input type="text" name="daysToUpdate"
                   value="<%= daysToUpdate %>"></td>
+     </tr>
+     <tr>
+       <td>Extra days per open challenge:</td>
+       <td><input type="text" name="extraDays"
+                  value="<%= extraDays %>"></td>
      </tr>
      <tr>
        <td>Simultaneous challenges allowed:</td>

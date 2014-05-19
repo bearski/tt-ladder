@@ -21,6 +21,7 @@ public class Ladder {
     dao.challengeList = new ArrayList<ChallengeV2>();
     dao.maxNumOfOpponents = 2;
     dao.numOfDaysToUpdate = 3;
+    dao.numExtraDaysPerChallenge = 1;
     dao.host = "localhost";
     dao.announcements = new ArrayList<AnnouncementV2>();
   }
@@ -49,6 +50,15 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
+  synchronized public int getNumExtraDaysPerChallenge() {
+    return dao.numExtraDaysPerChallenge;
+  }
+
+  synchronized public void setNumExtraDaysPerChallenge(int i) {
+    dao.numExtraDaysPerChallenge = i;
+    saveLadderFile(ladderFile, this);
+  }
+
   synchronized public boolean getSimultaneousChallengesAllowed() {
     return dao.simultaneousChallengesAllowed;
   }
@@ -57,7 +67,6 @@ public class Ladder {
     dao.simultaneousChallengesAllowed = b;
     saveLadderFile(ladderFile, this);
   }
-
 
   synchronized public String getHostName() {
     return dao.host;
@@ -68,11 +77,12 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
-  synchronized public void updateAppSetting(int numOfOpponent, int numOfDays,
+  synchronized public void updateAppSetting(int numOfOpponent, int numOfDays, int extraDays,
                                             boolean simultaneous, String host) 
   {
     setMaxNumOfOpponents(numOfOpponent);
     setNumOfDaysToUpdate(numOfDays);
+    setNumExtraDaysPerChallenge(extraDays);
     setSimultaneousChallengesAllowed(simultaneous);
     setHostName(host);
   }
@@ -89,7 +99,7 @@ public class Ladder {
           String.format("%s forfeited the match against %s.",
                         c.getOpponent().getName(),
                         c.getChallenger().getName());
-        updateChallenge(c.getChallenger(), 3, 0, note);
+        updateChallenge(c, 3, 0, note);
       }
     }
   }
@@ -476,8 +486,8 @@ public class Ladder {
 
     for (Iterator it = list.iterator(); it.hasNext(); ) {
       Challenge  c = (Challenge)it.next();
-      if( ((c.getChallenger().getName()).equals(player.getName())) ||
-          ((c.getOption().getOpponent().getName()).equals(player.getName()))) {
+      if (c.getChallenger().getName().equals(player.getName()) ||
+          c.getOption().getOpponent().getName().equals(player.getName())) {
         return c;
       } 
     }
@@ -492,14 +502,29 @@ public class Ladder {
     List<Challenge> challenges = new ArrayList<Challenge>(); 
     for (Iterator it = list.iterator(); it.hasNext(); ) {
       Challenge  c = (Challenge)it.next();
-      if( ((c.getChallenger().getName()).equals(player.getName())) ||
-          ((c.getOption().getOpponent().getName()).equals(player.getName()))) {
+      if (c.getChallenger().getName().equals(player.getName()) ||
+          c.getOption().getOpponent().getName().equals(player.getName())) {
         challenges.add(c);
       } 
     }
     return challenges;
   }
 
+  synchronized public Challenge getSpecificChallenge(Player challenger, Player opponent,
+                                                     List<Challenge> list) 
+  {
+    String cName = challenger.getName();
+    String oName = opponent.getName();
+
+    for (Iterator it = list.iterator(); it.hasNext(); ) {
+      Challenge  c = (Challenge)it.next();
+      if (c.getChallenger().getName().equals(cName) &&
+          c.getOption().getOpponent().getName().equals(oName)) {
+        return c;
+      } 
+    }
+    return null;
+  }
 
 
   /* count number of positions between ranks from and to 
@@ -539,8 +564,9 @@ public class Ladder {
         option.getOpponent().getName() + ".";
     }
 
+    List<Challenge> challengeList = getOpenChallengeList();
+
     if (!getSimultaneousChallengesAllowed()) {
-      List<Challenge> challengeList = getOpenChallengeList();
       Challenge currentChallenge = getChallenge(challenger, challengeList);
       if (currentChallenge != null) {
         return "You are already in a challenge with " + 
@@ -583,9 +609,11 @@ public class Ladder {
       }
       challenger.setAllowsHandicaps(true);
     }
-    
+
+    int numOpponentChallenges = getChallenges(option.getOpponent(), challengeList).size();
+    int extraDays = getNumExtraDaysPerChallenge();
     int numOfDays = getNumOfDaysToUpdate();
-    Date competeDate =  DateUtil.addWorkDays(new Date(), numOfDays); 
+    Date competeDate =  DateUtil.addWorkDays(new Date(), numOfDays + extraDays * numOpponentChallenges); 
     //competeDate = new Date(System.currentTimeMillis() + 2 * 60 * 1000);
       
     Challenge challenge = new Challenge(challenger, option, competeDate);
@@ -618,15 +646,14 @@ public class Ladder {
     return "";
   }
   
-  synchronized public void updateChallenge(Player player, 
+  synchronized public void updateChallenge(Challenge challenge,
                                            int challengerScore, 
                                            int opponentScore,
                                            String note)
   {
-    Challenge c = 
-      updateChallengeScore(player, challengerScore, opponentScore, note);
-    if (c != null) {
-      updateRanking(dao.playerList, challengerScore, opponentScore, c);
+    if (challenge != null) {
+      updateChallengeScore(challenge, challengerScore, opponentScore, note);
+      updateRanking(dao.playerList, challengerScore, opponentScore, challenge);
       saveLadderFile(ladderFile, this);
     }
   }
@@ -654,21 +681,16 @@ public class Ladder {
     };
   }
 
-  private Challenge updateChallengeScore(Player player, 
+  private void updateChallengeScore(Challenge challenge,
                                          int challengerScore, 
                                          int opponentScore,
                                          String note)
  
   {
-    List<Challenge> openList = getOpenChallengeList();
-    Challenge challenge = getChallenge(player, openList);
-
     if (challenge != null) {
       challenge.setScores(challengerScore, opponentScore, note);
       saveLadderFile(ladderFile, this);
     }
-
-    return challenge;
   }    
 
   private static int moveUpOverInactive(List<PlayerV2> l, int index) {
@@ -741,12 +763,9 @@ public class Ladder {
     } 
   }
 
-  synchronized public void cancelChallenge(Player player, String note)
+  synchronized public void cancelChallenge(Challenge challenge, String note)
   {
-    List<Challenge> openList = getOpenChallengeList();
-    Challenge challenge = getChallenge(player, openList);
-
-    if (challenge != null && challenge.getChallenger().equals(player)) {
+    if (challenge != null) {
       HandicapOffer offer = challenge.getOption().getOffer();
       if (offer != null) {
         challenge.getOpponent().addOffer(offer);

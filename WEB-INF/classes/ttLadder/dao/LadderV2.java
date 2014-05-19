@@ -11,6 +11,7 @@ public class LadderV2 implements Serializable {
   public List<ChallengeV2> challengeList;
   public int maxNumOfOpponents;
   public int numOfDaysToUpdate;
+  public int numExtraDaysPerChallenge;
   public boolean simultaneousChallengesAllowed;
   public String host;
 
