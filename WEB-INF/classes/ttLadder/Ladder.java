@@ -593,7 +593,7 @@ public class Ladder {
     }
 
     if (challenger.getStatus() != 1 || cIdx < 0 || oIdx < 0) {
-      errMsg.append("Challenger or oppponent is not an active player.");
+      errMsg.append("Challenger or opponent is not an active player.");
       return errMsg.toString();
     }
 
