@@ -66,7 +66,7 @@
   </div>
   
   <div id="leftcolumn">
-  <span class="header">Current TT Ladder: </span>
+  <span class="header">Current Ladder: </span>
   <ol>	
 <%
   for(Iterator it = (ladder.getPlayerList()).iterator(); it.hasNext();) {

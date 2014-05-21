@@ -36,7 +36,7 @@ by forfeit. The exact length of time is configured by the ladder
 admin. After this period, the ladder automatically moves the
 challenger up the ladder.
 
-    <li>Challenge matches are usually best of five games to 11 points. 
+    <li>Challenge matches in table tennis are usually best of five games to 11 points. 
 
     <li>A successful challenger moves above the challengee, but
 everyone else's order stays the same.
