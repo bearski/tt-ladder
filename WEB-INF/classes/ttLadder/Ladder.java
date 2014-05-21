@@ -633,7 +633,7 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
 
     StringBuffer subject = new StringBuffer();
-    subject.append("TT Ladder: " + challenger.getName());
+    subject.append(getPageTitle() + ": " + challenger.getName());
     if(option.getType() == -1) {
       subject.append(" has challenged you.");
     } else {
