@@ -1,7 +1,7 @@
 tt-ladder
 =========
 
-A table tennis ladder web app. Forked from [code written by Cenk Gazen and Pui Anusa](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable).
+A web app ladder for table tennis or other sports. Forked from [code written by Cenk Gazen and Pui Anusa](http://www.anuzen.net/pub/hg/hgwebdir.cgi/ladder/stable).
 
 ### Installation
 
