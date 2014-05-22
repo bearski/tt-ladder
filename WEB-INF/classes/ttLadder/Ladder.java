@@ -669,7 +669,7 @@ public class Ladder {
     }
   }
 
-  synchronized public void removeChallenge(Challenge Challenge)
+  synchronized public void removeChallenge(Challenge challenge)
   {
     if (challenge != null) {
       dao.challengeList.remove(challenge.getDao());
