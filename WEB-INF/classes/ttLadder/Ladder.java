@@ -669,6 +669,14 @@ public class Ladder {
     }
   }
 
+  synchronized public void removeChallenge(Challenge Challenge)
+  {
+    if (challenge != null) {
+      dao.challengeList.remove(challenge.getDao());
+      saveLadderFile(ladderFile, this);
+    }
+  }
+
   synchronized public String[] getDefaultNotes(Challenge c) {
     String challenger = c.getChallenger().getName();
     String opponent = c.getOpponent().getName();
