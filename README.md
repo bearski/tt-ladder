@@ -16,6 +16,10 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 
 ### History
 
+#### 23 May 2014
+
+Added option to require that new players start at the bottom.
+
 #### 18 May 2014
 
 Added option to allow multiple simultaneous challenges. Challengees get extra time if they already have open challenges. Page titles and headers are customizable.
