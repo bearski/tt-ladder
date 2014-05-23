@@ -33,6 +33,7 @@
   int daysToUpdate = ladder.getNumOfDaysToUpdate();
   int extraDays = ladder.getNumExtraDaysPerChallenge();
   String simultaneousChecked = (ladder.getSimultaneousChallengesAllowed() ? "checked" : "");
+  String newAtBottomChecked = (ladder.getNewPlayersAtBottom() ? "checked" : "");
   String host = ladder.getHostName();
   String pageTitle = ladder.getPageTitle();
   List<Player> players = ladder.getPlayerList();
@@ -83,6 +84,11 @@
        <td>Simultaneous challenges allowed:</td>
        <td><input type="checkbox" name="simultaneousChallengesAllowed"
                   <%= simultaneousChecked %>></td>
+     </tr>
+     <tr>
+       <td>New players start at the bottom:</td>
+       <td><input type="checkbox" name="newAtBottom"
+                  <%= newAtBottomChecked %>></td>
      </tr>
      <tr>
        <td>Host name:</td>

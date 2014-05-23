@@ -44,9 +44,10 @@
         String extraDaysTxt = request.getParameter("extraDays");
         int extraDays = Integer.parseInt(extraDaysTxt);
         boolean simultaneous = request.getParameter("simultaneousChallengesAllowed") != null;
+        boolean newAtBottom = request.getParameter("newAtBottom") != null;
         String hostName = request.getParameter("host");
         String title = request.getParameter("pageTitle");
-        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, hostName, title);
+        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, newAtBottom, hostName, title);
         response.sendRedirect("../index.jsp");
       }
 

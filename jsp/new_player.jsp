@@ -29,7 +29,8 @@
 <% 
   Ladder ladder = ladderHandle.getLadder();
   String pageTitle = ladder.getPageTitle();
-  int size = (ladder.getPlayerList()).size();
+  int size = ladder.getPlayerList().size();
+  boolean newAtBottom = ladder.getNewPlayersAtBottom();
 %>
 
 <html>
@@ -67,23 +68,31 @@
        <td>Email:</td>
        <td><input type="text" name="email"></td>
      </tr>
-     <tr>
-       <td>Position in the Ladder:</td>
-       <td><select name = "pos">
-<%       
-  for(int i=1; i <= size+1 ; i++) {
-    out.write("<option value='" + i + "'"); 
-    if(i==size+1) {
-      out.write(" selected='selected'");
-    } 
-    out.write(">" + i + "</option>");
-  }
+<%
+  if (!newAtBottom) {
+    out.write("<tr>");
+    out.write("<td>Position in the Ladder:</td>");
+    out.write("<td><select name = 'pos'>");
+    for (int i=1; i <= size+1 ; i++) {
+      out.write("<option value='" + i + "'"); 
+      if(i==size+1) {
+        out.write(" selected='selected'");
+      } 
+      out.write(">" + i + "</option>");
+    }
+    out.write("</select></td>");
+    out.write("</tr>");
+   }
 %>
-       </select></td>
-     </tr>
    </table>
    <br>Note: Email address is used for notification when a new challenge is created.
-   <br><br>
+   <br>
+<%
+  if (newAtBottom) {
+    out.write("<input type='hidden' name='pos' value='" + (size+1) + "'>");
+  }
+%>
+   <br>
    <input type="submit" value="Create a new player"></td>
    </form>
 

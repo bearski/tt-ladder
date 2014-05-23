@@ -13,6 +13,7 @@ public class LadderV2 implements Serializable {
   public int numOfDaysToUpdate;
   public int numExtraDaysPerChallenge;
   public boolean simultaneousChallengesAllowed;
+  public boolean newPlayersAtBottom;
   public String host;
   public String pageTitle;
 
