@@ -15,7 +15,7 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 8. Make sure SMTP is working. One way is `apt-get install mailutils`.
 9. Make sure the timezone is set in `/etc/timezone` (for future shells) and in the env var `TZ` (for the current shell).
 
-### The Admin Page
+### The admin page
 
 * `Extra days per open challenge` is only applicable when `Simultaneous challenges allowed` is checked. This is the extra time a challengee gets for each of his/her current open challenges when s/he gets a new challenge.
 * `Page title` is part of the title and the main header of each page, and part of the subject line of each challenge email sent.
