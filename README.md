@@ -15,12 +15,13 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 8. Make sure SMTP is working. One way is `apt-get install mailutils`.
 9. Make sure the timezone is set in `/etc/timezone` (for future shells) and in the env var `TZ` (for the current shell).
 
-### Admin
+### The Admin Page
 
-* Most settings on the `Admin` page are fairly self-explanatory. `Extra days per open challenge` is only applicable when `Simultaneous challenges allowed` is checked. This is the extra time a challengee gets for each of his/her current open challenges when s/he gets a new challenge.
+* `Extra days per open challenge` is only applicable when `Simultaneous challenges allowed` is checked. This is the extra time a challengee gets for each of his/her current open challenges when s/he gets a new challenge.
 * `Page title` is part of the title and the main header of each page, and part of the subject line of each challenge email sent.
-* When the `sticky` checkbox under the `Announcement` text box is checked, the announcement will stay at the top of the news for the day in which the announcement was posted.
+* When the `sticky` checkbox under the `Announcement` text field is checked, the announcement will stay at the top of the news for the day in which the announcement was posted.
 * The `submit` button at the bottom of the admin page opens a console, in which Java expressions can be evaluated. The name `l` is bound in the console to the current instance of the class `ttLadder.Ladder`. E.g. `l.getPlayer("Fred")` evaluates to the instance of `ttPlayer.Player` for which `getName()` is `"Fred"`. A typical use of the console is to cancel or remove challenges.
+* The rest of the other checkboxes, text fields and buttons are fairly self-explanatory.
 
 ### History
 
