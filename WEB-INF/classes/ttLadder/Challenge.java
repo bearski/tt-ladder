@@ -88,6 +88,18 @@ public class Challenge  {
     return dao.scoreOfChallenger;
   }
 
+  public void setScoreOfChallenger(int score) {
+    dao.scoreOfChallenger = score;
+  }
+
+  public int getScoreOfChallengee() {
+    return dao.scoreOfChallengee;
+  }
+
+  public void setScoreOfChallengee(int score) {
+    dao.scoreOfChallengee = score;
+  }
+
   public void setScores(int challenger, int opponent, String note) {
     dao.isOpenChallenge = false;
     dao.scoreOfChallenger = challenger;
@@ -96,10 +108,6 @@ public class Challenge  {
     if (note != null && !note.matches("\\s*")) {
       dao.note = note;
     }
-  }
-
-  public int getScoreOfChallengee() {
-    return dao.scoreOfChallengee;
   }
 
   public String getNote() {
