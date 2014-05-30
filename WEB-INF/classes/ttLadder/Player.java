@@ -14,10 +14,10 @@ public class Player {
     return dao;
   }
 
-  public Player(String name, int pwdHash, String email) {
+  public Player(String name, String pwd, String email) {
     dao = new PlayerV2();
     dao.name = name;
-    dao.pwdHash = pwdHash;
+    dao.pwd = pwd;
     dao.email = email;
     dao.status = 1;
     dao.offers = new ArrayList<HandicapOfferV2>();
@@ -31,22 +31,12 @@ public class Player {
     dao.name = name;
   }
 
-  // deprecated
   public String getPwd() {
     return dao.pwd;
   }
 
-  // deprecated
   void setPwd(String pwd) {
     dao.pwd = pwd;
-  }
-
-  public int getPwdHash() {
-    return dao.pwdHash;
-  }
-
-  void setPwdHash(int pwdHash) {
-    dao.pwdHash = pwdHash;
   }
 
   public String getEmail() {

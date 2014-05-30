@@ -146,21 +146,17 @@ public class Ladder {
                                        String email, int position) 
   {
     String errMsg = validatePlayerName(name);
-    if (errMsg.isEmpty()) {
-      if (pwd == null || pwd.isEmpty()) {
-        errMsg = "Cannot create a new player. Password is empty.";
-      } else {
-        Player p = new Player(name, pwd.hashCode(), email);
+    if(errMsg.length() == 0) {
+      Player p = new Player(name, pwd, email);
 
-        if(position <= 0) {
-          dao.playerList.add(0, p.getDao());     
-        } else if(position >= dao.playerList.size()) {
-          dao.playerList.add(p.getDao());     
-        } else {
-          dao.playerList.add(position - 1, p.getDao());     
-        }
-        saveLadderFile(ladderFile, this);
+      if(position <= 0) {
+        dao.playerList.add(0, p.getDao());     
+      } else if(position >= dao.playerList.size()) {
+        dao.playerList.add(p.getDao());     
+      } else {
+        dao.playerList.add(position - 1, p.getDao());     
       }
+      saveLadderFile(ladderFile, this);
     }
     return errMsg;
   }
@@ -226,12 +222,10 @@ public class Ladder {
   {
     Player player = getPlayer(playerName);
     if (player != null) {
-      if(!playerName.equals(newName) && validatePlayerName(newName).length() == 0) {
+        if(!playerName.equals(newName) && validatePlayerName(newName).length() == 0) {
         player.setName(newName);
       }
-      if (pwd != null && !pwd.isEmpty()) {
-        player.setPwdHash(pwd.hashCode());
-      }
+      player.setPwd(pwd);
       player.setEmail(email);
       player.setStatus(status);
 
