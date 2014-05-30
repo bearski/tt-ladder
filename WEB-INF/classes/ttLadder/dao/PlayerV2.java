@@ -13,5 +13,4 @@ public class PlayerV2 implements Serializable {
   public List<HandicapOfferV2> offers;
   public boolean allowsHandicaps;
   public int defendTop;
-  public int defendTopStreak;
 }

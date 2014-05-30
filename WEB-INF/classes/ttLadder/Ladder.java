@@ -681,9 +681,6 @@ public class Ladder {
       int opponentIndex = dao.playerList.indexOf(opponent.getDao());
       if (opponentIndex==0) {
         opponent.incrDefendTop();
-        opponent.incrDefendTopStreak();
-      } else {
-        opponent.setDefendTopStreak(0);
       }
       saveLadderFile(ladderFile, this);
     }

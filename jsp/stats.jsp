@@ -44,7 +44,7 @@
   <div class='indent'> 
   <table class='stats'>
     <tr>
-      <th class='caption' colspan=9>Players Stats:</th>
+      <th class='caption' colspan=10>Players Stats:</th>
     </tr>
     <tr>
       <th class='p'>Player</th>
@@ -56,8 +56,7 @@
       <th>Ch</th>
       <th>Op</th>
       <th>Streak</th>
-      <th>Defend #1</th>
-      <th>D#1 Streak</th>
+      <th>#1 Def</th>
     </tr>
 <%
   int i = 1;
@@ -81,7 +80,6 @@
       }
     }
     int d1 = e.getKey().getDefendTop();
-    int d1_st = e.getKey().getDefendTopStreak();
 
     if(i%2==0) {
       out.print("<tr class='e'>");
@@ -104,7 +102,6 @@
       <td><%= o %></td>
       <td><%= st %></td>
       <td><%= d1 %></td>
-      <td><%= d1_st %></td>
     </tr>
 <%
   }
