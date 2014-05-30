@@ -19,7 +19,7 @@
   }
 
   String newName = request.getParameter("newName");
-  String pwd = request.getParameter("pwd");
+  int pwd = request.getParameter("pwd").hashCode();
   String email = request.getParameter("email");
   int status = Integer.parseInt(request.getParameter("status"));
 

@@ -20,7 +20,7 @@
   Player player = ladder.getPlayer(name);
   if (player == null) {
     message.append("Player " + name + " doesn't exist.");
-  } else if(!player.getPwd().equals(pwd) && !adminPwd.equals(pwd)) {
+  } else if(player.getPwd() != pwd.hashCode() && !adminPwd.equals(pwd)) {
     message.append(" The password is incorrect.");
   } else {  
     session.setAttribute("pName", name);

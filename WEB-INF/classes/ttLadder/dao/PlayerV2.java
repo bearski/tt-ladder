@@ -7,7 +7,7 @@ public class PlayerV2 implements Serializable {
   private static final long serialVersionUID = 1L;
  
   public String name;
-  public String pwd;
+  public int pwd;
   public String email;
   public int status;
   public List<HandicapOfferV2> offers;

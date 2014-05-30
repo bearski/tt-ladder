@@ -14,7 +14,7 @@ public class Player {
     return dao;
   }
 
-  public Player(String name, String pwd, String email) {
+  public Player(String name, int pwd, String email) {
     dao = new PlayerV2();
     dao.name = name;
     dao.pwd = pwd;
@@ -31,11 +31,11 @@ public class Player {
     dao.name = name;
   }
 
-  public String getPwd() {
+  public int getPwd() {
     return dao.pwd;
   }
 
-  void setPwd(String pwd) {
+  void setPwd(int pwd) {
     dao.pwd = pwd;
   }
 

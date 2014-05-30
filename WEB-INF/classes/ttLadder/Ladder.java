@@ -142,7 +142,7 @@ public class Ladder {
     return errMsg.toString();
   }
 
-  synchronized public String addPlayer(String name, String pwd, 
+  synchronized public String addPlayer(String name, int pwd, 
                                        String email, int position) 
   {
     String errMsg = validatePlayerName(name);
@@ -217,7 +217,7 @@ public class Ladder {
     return -1;
   }
 
-  synchronized public Player updatePlayerSetting(String playerName, String newName, String pwd, 
+  synchronized public Player updatePlayerSetting(String playerName, String newName, int pwd, 
                                                  String email, int status) 
   {
     Player player = getPlayer(playerName);
