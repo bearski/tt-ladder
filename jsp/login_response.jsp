@@ -45,7 +45,6 @@
   <div id="page">
 
   Name = <%= name %><br> 
-  Pwd = <%=pwd %><br>
   Error: <%= message %><br>
 
  </div>

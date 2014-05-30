@@ -25,6 +25,10 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 
 ### History
 
+#### 29 May 2014
+
+Incorrect name or password at login no longer displays the password.
+
 #### 23 May 2014
 
 Added option to require that new players start at the bottom.
