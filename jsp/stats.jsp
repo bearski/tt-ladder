@@ -56,7 +56,7 @@
       <th>Ch</th>
       <th>Op</th>
       <th>Streak</th>
-      <th>#1 Def</th>
+      <th>Def #1</th>
     </tr>
 <%
   int i = 1;
