@@ -103,7 +103,7 @@ public class Player {
     dao.defendTop = defendTop;
   }
 
-  void incrDefendTop() {
+  public void incrDefendTop() {
     dao.defendTop++;
   }
 
