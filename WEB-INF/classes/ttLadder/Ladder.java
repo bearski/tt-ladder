@@ -142,21 +142,25 @@ public class Ladder {
     return errMsg.toString();
   }
 
-  synchronized public String addPlayer(String name, int pwd, 
+  synchronized public String addPlayer(String name, String pwd, 
                                        String email, int position) 
   {
     String errMsg = validatePlayerName(name);
-    if(errMsg.length() == 0) {
-      Player p = new Player(name, pwd, email);
-
-      if(position <= 0) {
-        dao.playerList.add(0, p.getDao());     
-      } else if(position >= dao.playerList.size()) {
-        dao.playerList.add(p.getDao());     
+    if (errMsg.isEmpty()) {
+      if (pwd == null || pwd.isEmpty()) {
+        errMsg = "Cannot create a new player. Password is empty.";
       } else {
-        dao.playerList.add(position - 1, p.getDao());     
+        Player p = new Player(name, pwd.hashCode(), email);
+
+        if(position <= 0) {
+          dao.playerList.add(0, p.getDao());     
+        } else if(position >= dao.playerList.size()) {
+          dao.playerList.add(p.getDao());     
+        } else {
+          dao.playerList.add(position - 1, p.getDao());     
+        }
+        saveLadderFile(ladderFile, this);
       }
-      saveLadderFile(ladderFile, this);
     }
     return errMsg;
   }
@@ -217,15 +221,17 @@ public class Ladder {
     return -1;
   }
 
-  synchronized public Player updatePlayerSetting(String playerName, String newName, int pwd, 
+  synchronized public Player updatePlayerSetting(String playerName, String newName, String pwd, 
                                                  String email, int status) 
   {
     Player player = getPlayer(playerName);
     if (player != null) {
-        if(!playerName.equals(newName) && validatePlayerName(newName).length() == 0) {
+      if(!playerName.equals(newName) && validatePlayerName(newName).length() == 0) {
         player.setName(newName);
       }
-      player.setPwd(pwd);
+      if (pwd != null && !pwd.isEmpty()) {
+        player.setPwdHash(pwd.hashCode());
+      }
       player.setEmail(email);
       player.setStatus(status);
 
