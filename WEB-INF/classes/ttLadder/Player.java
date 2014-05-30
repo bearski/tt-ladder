@@ -21,6 +21,8 @@ public class Player {
     dao.email = email;
     dao.status = 1;
     dao.offers = new ArrayList<HandicapOfferV2>();
+    dao.defendTop = 0;
+    dao.defendTopStreak = 0;
   }
   
   public String getName() {
@@ -92,6 +94,30 @@ public class Player {
     if (offer == null)
       return false;
     return dao.offers.remove(offer.getDao());
+  }
+
+  public int getDefendTop() {
+    return dao.defendTop;
+  }
+
+  void setDefendTop(int defendTop) {
+    dao.defendTop = defendTop;
+  }
+
+  void incrDefendTop() {
+    dao.defendTop++;
+  }
+
+  public int getDefendTopStreak() {
+    return dao.defendTopStreak;
+  }
+
+  void setDefendTopStreak(int defendTopStreak) {
+    dao.defendTopStreak = defendTopStreak;
+  }
+
+  void incrDefendTopStreak() {
+    dao.defendTopStreak++;
   }
 
   public String toString() {

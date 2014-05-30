@@ -677,6 +677,14 @@ public class Ladder {
     if (challenge != null) {
       updateChallengeScore(challenge, challengerScore, opponentScore, note);
       updateRanking(dao.playerList, challengerScore, opponentScore, challenge);
+      Player opponent = challenge.getOption().getOpponent();
+      int opponentIndex = dao.playerList.indexOf(opponent.getDao());
+      if (opponentIndex==0) {
+        opponent.incrDefendTop();
+        opponent.incrDefendTopStreak();
+      } else {
+        opponent.setDefendTopStreak(0);
+      }
       saveLadderFile(ladderFile, this);
     }
   }
