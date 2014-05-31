@@ -22,7 +22,6 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 * When the `Sticky` checkbox under the `Announcement` text field is checked, the announcement will stay at the top of the news for the day in which the announcement was posted.
 * The `Submit` button at the bottom of the admin page opens a console, in which Java expressions can be evaluated. The name `l` is bound in the console to the current instance of the class `ttLadder.Ladder`. E.g. `l.getPlayer("Fred")` evaluates to the instance of `ttPlayer.Player` for which `getName()` is `"Fred"`. A typical use of the console is to edit incorrectly entered challenge results. Note that the console is not necessary to reset a forgotten password, as the admin can log into a user account with the admin password.
 * The other text fields, dropdowns and buttons are fairly self-explanatory.
-* 
 
 ### History
 
