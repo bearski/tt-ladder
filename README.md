@@ -31,7 +31,7 @@ Added setting for the challenger's score in a forfeit.
 
 #### 29 May 2014
 
-An incorrect name or password at login no longer displays the password. Added the number of successful defenses of the top rung to the stats page.
+An incorrect name or password at login no longer displays the password. Added to the stats page the number of successful defenses of the top rung.
 
 #### 23 May 2014
 
