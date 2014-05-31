@@ -25,6 +25,10 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 
 ### History
 
+#### 30 May 2014
+
+Added setting for the challenger's score in a forfeit.
+
 #### 29 May 2014
 
 An incorrect name or password at login no longer displays the password. Added the number of successful defenses of the top rung to the stats page.
