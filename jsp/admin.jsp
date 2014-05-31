@@ -34,6 +34,7 @@
   int extraDays = ladder.getNumExtraDaysPerChallenge();
   String simultaneousChecked = (ladder.getSimultaneousChallengesAllowed() ? "checked" : "");
   String newAtBottomChecked = (ladder.getNewPlayersAtBottom() ? "checked" : "");
+  int forfeitScore = ladder.getForfeitScore();
   String host = ladder.getHostName();
   String pageTitle = ladder.getPageTitle();
   List<Player> players = ladder.getPlayerList();
@@ -89,6 +90,11 @@
        <td>New players start at the bottom:</td>
        <td><input type="checkbox" name="newAtBottom"
                   <%= newAtBottomChecked %>></td>
+     </tr>
+     <tr>
+       <td>Challenger score in a forfeit:</td>
+       <td><input type="text" name="forfeitScore"
+                  value="<%= forfeitScore %>"></td>
      </tr>
      <tr>
        <td>Host name:</td>

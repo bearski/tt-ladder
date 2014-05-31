@@ -24,6 +24,7 @@ public class Ladder {
     dao.numExtraDaysPerChallenge = 1;
     dao.simultaneousChallengesAllowed = false;
     dao.newPlayersAtBottom = true;
+    dao.forfeitScore = 3;
     dao.host = "localhost";
     dao.pageTitle = "Table Tennis Ladder";
     dao.announcements = new ArrayList<AnnouncementV2>();
@@ -80,6 +81,15 @@ public class Ladder {
     saveLadderFile(ladderFile, this);
   }
 
+  synchronized public int getForfeitScore() {
+    return dao.forfeitScore;
+  }
+
+  synchronized public void setForfeitScore(int i) {
+    dao.forfeitScore = i;
+    saveLadderFile(ladderFile, this);
+  }
+
   synchronized public String getHostName() {
     return dao.host;
   }
@@ -99,13 +109,14 @@ public class Ladder {
   }
 
   synchronized public void updateAppSetting(int numOfOpponent, int numOfDays, int extraDays,
-                                            boolean simultaneous, boolean newAtBottom, String host, String pageTitle) 
+                                            boolean simultaneous, boolean newAtBottom, int forfeitScore, String host, String pageTitle) 
   {
     setMaxNumOfOpponents(numOfOpponent);
     setNumOfDaysToUpdate(numOfDays);
     setNumExtraDaysPerChallenge(extraDays);
     setSimultaneousChallengesAllowed(simultaneous);
     setNewPlayersAtBottom(newAtBottom);
+    setForfeitScore(forfeitScore);
     setHostName(host);
     setPageTitle(pageTitle);
   }
@@ -122,7 +133,7 @@ public class Ladder {
           String.format("%s forfeited the match against %s.",
                         c.getOpponent().getName(),
                         c.getChallenger().getName());
-        updateChallenge(c, 3, 0, note);
+        updateChallenge(c, getForfeitScore(), 0, note);
       }
     }
   }

@@ -45,9 +45,11 @@
         int extraDays = Integer.parseInt(extraDaysTxt);
         boolean simultaneous = request.getParameter("simultaneousChallengesAllowed") != null;
         boolean newAtBottom = request.getParameter("newAtBottom") != null;
+        String forfeitScoreTxt = request.getParameter("forfeitScore");
+        int forfeitScore = Integer.parseInt(forfeitScoreTxt);
         String hostName = request.getParameter("host");
         String title = request.getParameter("pageTitle");
-        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, newAtBottom, hostName, title);
+        ladder.updateAppSetting(numOfOp, numOfDays, extraDays, simultaneous, newAtBottom, forfeitScore, hostName, title);
         response.sendRedirect("../index.jsp");
       }
 
