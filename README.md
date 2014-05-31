@@ -28,7 +28,7 @@ A web app ladder for table tennis or other sports. Forked from [code written by 
 
 #### 29 May 2014
 
-Incorrect name or password at login no longer displays the password.
+An incorrect name or password at login no longer displays the password. Added the number of successful defenses of the top rung to the stats page.
 
 #### 23 May 2014
 

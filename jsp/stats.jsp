@@ -44,7 +44,7 @@
   <div class='indent'> 
   <table class='stats'>
     <tr>
-      <th class='caption' colspan=9>Players Stats:</th>
+      <th class='caption' colspan=10>Players Stats:</th>
     </tr>
     <tr>
       <th class='p'>Player</th>
@@ -56,6 +56,7 @@
       <th>Ch</th>
       <th>Op</th>
       <th>Streak</th>
+      <th>Def #1</th>
     </tr>
 <%
   int i = 1;
@@ -78,6 +79,7 @@
 	  st = "Lost " + st_v;
       }
     }
+    int d1 = e.getKey().getDefendTop();
 
     if(i%2==0) {
       out.print("<tr class='e'>");
@@ -99,6 +101,7 @@
       <td><%= c %></td>
       <td><%= o %></td>
       <td><%= st %></td>
+      <td><%= d1 %></td>
     </tr>
 <%
   }
