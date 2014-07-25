@@ -45,7 +45,7 @@
   <div class='indent'> 
   <table class='stats'>
     <tr>
-      <th class='caption' colspan=10>Players Stats:</th>
+      <th class='caption' colspan=12>Players Stats:</th>
     </tr>
     <tr>
       <th class='p'>Player</th>
