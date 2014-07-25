@@ -282,10 +282,7 @@ public class Ladder {
 
   synchronized public String updatePlayerRanking(Player player, int position) {
     String errMsg = null;
-    if (isInOpenChallenge(player)) {
-      errMsg = "Cannot update player rank. " +
-               "The selected player is in challenge.";
-    } else if (dao.playerList.remove(player.getDao())) {
+    if (dao.playerList.remove(player.getDao())) {
       dao.playerList.add(position, player.getDao());
       saveLadderFile(ladderFile, this);
     } else {
