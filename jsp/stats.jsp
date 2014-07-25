@@ -63,7 +63,7 @@
     </tr>
 <%
   int i = 1;
-  DecimalFormat = new DecimalFormat("#.000");
+  DecimalFormat df = new DecimalFormat("#.000");
   for (Map.Entry<Player, PlayerStats> e : map.entrySet()) {
     String player = e.getKey().getName();
     int m = e.getValue().matches;
