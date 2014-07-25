@@ -5,6 +5,7 @@
 
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" 
     prefix="c" %>
@@ -51,8 +52,10 @@
       <th>MP</th>
       <th>W</th>
       <th>L</th>
+      <th>%</th>
       <th>GW</th>
       <th>GL</th>
+      <th>%</th>
       <th>Ch</th>
       <th>Op</th>
       <th>Streak</th>
@@ -60,13 +63,16 @@
     </tr>
 <%
   int i = 1;
+  DecimalFormat = new DecimalFormat("#.000");
   for (Map.Entry<Player, PlayerStats> e : map.entrySet()) {
     String player = e.getKey().getName();
     int m = e.getValue().matches;
     int m_w = e.getValue().matchesWon;
     int m_l = e.getValue().matchesLost;
+    String m_r = df.format(Math.round(1000.0 * m_w / (m_w + m_l)) / 1000.0);
     int g_w = e.getValue().gamesWon;
     int g_l = e.getValue().gamesLost;
+    String g_r = df.format(Math.round(1000.0 * g_w / (g_w + g_l)) / 1000.0);
     int c = e.getValue().beChallenger;
     int o = e.getValue().beOpponent;
     Boolean st_type = e.getValue().streakType;
@@ -96,8 +102,10 @@
       <td><%= m %></td>
       <td><%= m_w %></td>
       <td><%= m_l %></td>
+      <td><%= m_r %></td>
       <td><%= g_w %></td>
       <td><%= g_l %></td>
+      <td><%= g_r %></td>
       <td><%= c %></td>
       <td><%= o %></td>
       <td><%= st %></td>
