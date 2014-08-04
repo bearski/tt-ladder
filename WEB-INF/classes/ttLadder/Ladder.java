@@ -557,6 +557,22 @@ public class Ladder {
     return null;
   }
 
+  synchronized public Challenge getSpecificRecentClosedChallenge(Player challenger, Player opponent)
+  {
+    String cName = challenger.getName();
+    String oName = opponent.getName();
+    List<Challenge> list = getCloseChallengeList();
+
+    for (Iterator it = list.iterator(list.size()); it.hasPrevious(); ) {
+      Challenge  c = (Challenge)it.next();
+      if (c.getChallenger().getName().equals(cName) &&
+          c.getOption().getOpponent().getName().equals(oName)) {
+        return c;
+      } 
+    }
+    return null;
+  }
+
 
   /* count number of positions between ranks from and to 
      skipping inactive players */
