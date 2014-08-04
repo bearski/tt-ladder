@@ -101,9 +101,7 @@ public class Challenge  {
   }
 
   public void setScores(int challenger, int opponent, String note) {
-    if (note != null) {
-      dao.note = note;
-    }
+    dao.note = note;
     dao.isOpenChallenge = false;
     dao.scoreOfChallenger = challenger;
     dao.scoreOfChallengee = opponent;
@@ -111,9 +109,7 @@ public class Challenge  {
   }
 
   public void cancelChallenge(String note) {
-    if (note != null) {
-      dao.note = note;
-    }
+    dao.note = note;
     dao.isOpenChallenge = false;
     dao.scoreOfChallengee = -1;
     dao.scoreOfChallenger = -1;
