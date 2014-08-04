@@ -202,7 +202,7 @@
      </tr>
    </table>
    <br>
-   <input type="submit"></td>
+   <input type="submit" name="cmd" value="Show Console"></td>
    </form>
 
   </div>
