@@ -563,7 +563,7 @@ public class Ladder {
     String oName = opponent.getName();
     List<Challenge> list = getCloseChallengeList();
 
-    for (Iterator it = list.iterator(list.size()); it.hasPrevious(); ) {
+    for (Iterator it = list.listIterator(list.size()); it.hasPrevious(); ) {
       Challenge  c = (Challenge)it.next();
       if (c.getChallenger().getName().equals(cName) &&
           c.getOption().getOpponent().getName().equals(oName)) {
