@@ -101,21 +101,17 @@ public class Challenge  {
   }
 
   public void setScores(int challenger, int opponent, String note) {
+    if (note != null) {
+      dao.note = note;
+    }
     dao.isOpenChallenge = false;
     dao.scoreOfChallenger = challenger;
     dao.scoreOfChallengee = opponent;
     dao.scoreUpdatedDate = new Date();
-    if (note != null && !note.matches("\\s*")) {
-      dao.note = note;
-    }
   }
 
-  public String getNote() {
-    return dao.note;
-  }
-
-  void cancelChallenge(String note) {
-    if (note != null && !note.matches("\\s*")) {
+  public void cancelChallenge(String note) {
+    if (note != null) {
       dao.note = note;
     }
     dao.isOpenChallenge = false;
@@ -124,8 +120,14 @@ public class Challenge  {
     dao.scoreUpdatedDate = new Date();
   }
 
+  public String getNote() {
+    return dao.note;
+  }
+
   public String toString() {
-    return getCreatedDate() + " " + getChallenger().getName() + " " + 
+    return getCreatedDate() + " " +
+      getScoreUpdatedDate() + " " +
+      getChallenger().getName() + " " + 
       getOpponent().getName() + " " +
       getScoreOfChallenger() + "-" + getScoreOfChallengee();
   }
